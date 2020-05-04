@@ -1,0 +1,7 @@
+{
+  "name": "CabPoolRide-ClientPanel",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
