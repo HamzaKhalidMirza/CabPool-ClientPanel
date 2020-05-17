@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-icon
+        class="back"
+        size="large"
+        name="arrow-back-outline"
+        (click)="goBack()"
+      ></ion-icon>
+    </ion-buttons>
+    <ion-title>Account Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form>
+    <ion-list>
+      <ion-item lines="none" class="profile">
+        <ion-avatar class="ion-padding">
+          <ion-img [src]=[currentUser?.photoAvatar]></ion-img>
+        </ion-avatar>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="info">
+          <p>First name</p>
+          <ion-input disabled class="input" value="{{currentUser?.fName}}"></ion-input>
+        </div>
+        <ion-icon slot="end" size="small" name="pencil"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="info">
+          <p>Sur name</p>
+          <ion-input disabled class="input" value="{{currentUser?.lName}}"></ion-input>
+        </div>
+        <ion-icon slot="end" size="small" name="pencil"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="info">
+          <p>Gender</p>
+          <h2>{{currentUser?.gender}}</h2>
+        </div>
+        <ion-icon slot="end" size="small" name="pencil"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="info">
+          <p>DOB</p>
+          <h2>{{currentUser?.dob}}</h2>
+        </div>
+        <ion-icon slot="end" size="small" name="pencil"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="info">
+          <p>Username</p>
+          <h2>{{currentUser?.username}}</h2>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="info">
+          <p>Phone Number</p>
+          <h2>{{currentUser?.countryCode}}{{currentUser?.phone}}</h2>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="info">
+          <p>Email</p>
+          <h2>{{currentUser?.email}}</h2>
+        </div>
+      </ion-item>
+      <ion-button color="primary" expand="full" class="ion-margin">
+        Save Settings
+      </ion-button>
+      <ion-item lines="none" class="password">
+        <div class="info">
+          <p>Password</p>
+          <h2>Change Password</h2>
+        </div>
+        <ion-icon slot="end" name="chevron-forward-outline" color="primary"></ion-icon>
+      </ion-item>
+    </ion-list>  
+  </form>
+</ion-content>

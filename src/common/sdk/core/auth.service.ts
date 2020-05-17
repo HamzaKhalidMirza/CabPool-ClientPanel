@@ -18,16 +18,36 @@ export class AuthService {
     return this.storage.get('token');
   }
 
-  public async logout() {
-    this.storage.remove('token');
-    this.router.navigateByUrl('/sign-in');
-  }
-
-  getDecodedAccessToken(token: string): any {
+  public getDecodedAccessToken(token: string): any {
     try {
       return jwt_decode(token);
     } catch (Error) {
       return null;
     }
   }
+
+  public async logout() {
+    await this.storage.remove('token');
+    this.router.navigateByUrl('/app-starter-auth');
+  }
+
+  public setFieldDataToStorage(fieldName: string, fieldData: any) {
+    this.storage.set(fieldName, fieldData);
+  }
+
+  public getFieldDataFromStorage(fieldName: string) {
+    return this.storage.get(fieldName);
+  }
+
+  public async clearFieldDataFromStorage(fieldName: string) {
+    await this.storage.remove(fieldName);
+  }
+
+  public async getCurrentUser() {
+    const token = await this.getTokenFromStorage();
+    const decodedtoken = this.getDecodedAccessToken(token);
+
+    return decodedtoken.user;
+  }
+
 }

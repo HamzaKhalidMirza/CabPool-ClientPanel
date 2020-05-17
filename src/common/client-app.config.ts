@@ -1,6 +1,6 @@
 export class ClientAppConfig {
     private static localPath = 'http://localhost:3000';
-    private static hostPath = 'https://cabpool-ride.herokuapp.com/';
+    private static hostPath = 'https://cabpool-ride.herokuapp.com';
 
     public static getLocalPath(): string {
         return ClientAppConfig.localPath;
@@ -10,3 +10,5 @@ export class ClientAppConfig {
         return ClientAppConfig.hostPath;
     }
 }
+
+// ../common/sdk/custom/api

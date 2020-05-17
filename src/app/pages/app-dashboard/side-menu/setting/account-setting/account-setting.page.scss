@@ -1,0 +1,40 @@
+ion-list {
+  ion-item {
+    border-bottom: 1px solid #ccc;
+  }
+  ion-item.profile {
+    border-bottom: none;
+  }
+  .info p {
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+  }
+  .info h2, .info .input {
+    margin-top: 5px;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  ion-button {
+    text-align: center;
+    height: 70px;
+    padding: 10px 0;
+    font-size: 1.1rem;
+  }
+  .password {
+    border-top: 1px solid #ccc;
+    border-bottom: none;
+  }
+  .profile ion-avatar {
+    border-radius: 0;
+    width: 100%;
+    height: auto;
+    margin: auto;
+    background-color: #ccc;
+    border: 1px solid #ddd;
+  }
+  .profile ion-avatar ion-img {
+    width: 40%;
+    height: auto;
+    margin: auto;
+  }
+}

@@ -1,0 +1,49 @@
+* {
+  font-size: 1rem;
+}
+.header-card {
+  border-radius: 0;
+  height: 55%;
+
+  .logo {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 900;
+  }
+  h6 {
+    font-size: 0.8rem;
+  }
+}
+
+.section {
+  height: 45%;
+  padding-top: 20px;
+
+  ion-row {
+    padding-left: 20px;
+
+    .section-head {
+      font-weight: 600;
+    }
+  }
+  .input {
+    color: #444;
+    padding: 5px 15px;
+    border-left: 1.2px solid #444;
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  .header-card {
+    height: 60%;
+  }
+
+  .section {
+    height: 40%;
+    padding-top: 10px;
+  }
+}

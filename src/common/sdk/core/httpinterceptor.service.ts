@@ -27,7 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         err => {
           if (
             err instanceof HttpErrorResponse &&
-            (err.status === 403 || err.status === 401)
+            (err.status === 403)
           ) {
             this.authService.logout();
           }

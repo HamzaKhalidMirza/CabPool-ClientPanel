@@ -14,7 +14,7 @@ export class RedirectLoginGuard implements CanActivate {
   async canActivate() {
     const token = await this.authService.getTokenFromStorage();
     if (token) {
-      this.router.navigateByUrl('/dashboard');
+      this.router.navigateByUrl('/app-dashboard');
   } else {
       return true;
     }
