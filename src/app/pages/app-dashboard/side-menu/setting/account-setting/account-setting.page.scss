@@ -1,33 +1,8 @@
 ion-list {
-  ion-item {
-    border-bottom: 1px solid #ccc;
-  }
-  ion-item.profile {
-    border-bottom: none;
-  }
-  .info p {
-    margin-bottom: 5px;
-    font-size: 0.8rem;
-  }
-  .info h2, .info .input {
-    margin-top: 5px;
-    font-weight: 600;
-    font-size: 1.1rem;
-  }
-  ion-button {
-    text-align: center;
-    height: 70px;
-    padding: 10px 0;
-    font-size: 1.1rem;
-  }
-  .password {
-    border-top: 1px solid #ccc;
-    border-bottom: none;
-  }
   .profile ion-avatar {
     border-radius: 0;
     width: 100%;
-    height: auto;
+    height: 150px;
     margin: auto;
     background-color: #ccc;
     border: 1px solid #ddd;
@@ -37,4 +12,36 @@ ion-list {
     height: auto;
     margin: auto;
   }
+}
+
+ion-grid {
+  .info {
+    border-bottom: 1px solid #ccc;
+  }
+  .info .start-para {
+    padding-left: 16px;
+  }
+  .info p {
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+  }
+  .info ion-label {
+    margin-bottom: 10px;    
+  }
+  .info h2, .info .input, .info ion-datetime, .info ion-select {
+    margin-top: 5px;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  ion-button.save {
+    text-align: center;
+    height: 70px;
+    padding: 10px 0;
+    font-size: 1.1rem;
+  }
+  .password {
+    border-top: 1px solid #ccc;
+    border-bottom: none;
+  }
+
 }

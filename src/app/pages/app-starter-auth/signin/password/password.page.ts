@@ -77,6 +77,7 @@ export class PasswordPage implements OnInit, AfterViewInit {
           this.loading = false;
           await this.authService.clearFieldDataFromStorage('client-auth');
           await this.authService.saveTokenToStorage(response.token);
+          await this.authService.setCurrentUser(response.data.user);
           this.router.navigateByUrl('/app-dashboard');
         },
         (error: AppError) => {

@@ -43,11 +43,12 @@ export class AuthService {
     await this.storage.remove(fieldName);
   }
 
-  public async getCurrentUser() {
-    const token = await this.getTokenFromStorage();
-    const decodedtoken = this.getDecodedAccessToken(token);
+  public setCurrentUser(currentUser) {
+    this.storage.set('current-client', currentUser);
+  }
 
-    return decodedtoken.user;
+  public getCurrentUser() {
+    return this.storage.get('current-client');
   }
 
 }

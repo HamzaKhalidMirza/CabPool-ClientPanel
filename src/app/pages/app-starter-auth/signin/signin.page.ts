@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ClientAuthService } from 'src/common/sdk/custom/api/clientAuth.service';
-import { AppError } from 'src/common/error/app-error';
-import { BadInput } from 'src/common/error/bad-input';
-import { AuthService } from 'src/common/sdk/core/auth.service';
-import { NotFoundError } from 'src/common/error/not-found-error';
-import { UnAuthorized } from 'src/common/error/unauthorized-error';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from "@angular/forms";
+import { ClientAuthService } from "src/common/sdk/custom/api/clientAuth.service";
+import { AppError } from "src/common/error/app-error";
+import { BadInput } from "src/common/error/bad-input";
+import { AuthService } from "src/common/sdk/core/auth.service";
+import { NotFoundError } from "src/common/error/not-found-error";
+import { UnAuthorized } from "src/common/error/unauthorized-error";
 
 @Component({
-  selector: 'app-signin',
-  templateUrl: './signin.page.html',
-  styleUrls: ['./signin.page.scss'],
+  selector: "app-signin",
+  templateUrl: "./signin.page.html",
+  styleUrls: ["./signin.page.scss"],
 })
 export class SigninPage implements OnInit {
-
   loading = false;
   formSubmit = false;
   loginForm: FormGroup;
@@ -26,7 +30,7 @@ export class SigninPage implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private clientAuthService: ClientAuthService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.formInitializer();
@@ -35,13 +39,13 @@ export class SigninPage implements OnInit {
   formInitializer() {
     this.loginForm = this.formBuilder.group({
       phone: [
-        '',
+        "",
         [
           Validators.required,
           Validators.min(1000000000),
-          Validators.max(9999999999)
-        ]
-      ]
+          Validators.max(9999999999),
+        ],
+      ],
     });
     this.loginForm.reset();
   }
@@ -51,11 +55,10 @@ export class SigninPage implements OnInit {
   }
 
   get phoneNumber() {
-    return this.loginForm.get('phone');
+    return this.loginForm.get("phone");
   }
 
   phoneNoVerification() {
-
     this.loading = true;
     this.formSubmit = true;
 
@@ -64,30 +67,32 @@ export class SigninPage implements OnInit {
       return;
     }
 
-    this.clientAuthService.verifyPhoneExistance(this.loginForm.value)
-      .subscribe(
-        async (response) => {
-          this.loading = false;
-          this.clientObj = new Object({
-            phone: this.phone
-          });
+    this.clientAuthService.verifyPhoneExistance(this.loginForm.value).subscribe(
+      async (response) => {
+        this.loading = false;
+        this.clientObj = new Object({
+          phone: this.phone,
+        });
 
-          await this.authService.clearFieldDataFromStorage('client-auth');
-          await this.authService.setFieldDataToStorage('client-auth', this.clientObj);
-          this.router.navigateByUrl('/app-starter-auth/signin/password');
-        },
-        (error: AppError) => {
-          this.loading = false;
-          if (error instanceof BadInput) {
-            this.phoneNumber.setErrors({ required: true });
-          } else if (error instanceof NotFoundError) {
-            this.phoneNumber.setErrors({ notFound: true });
-          } else if (error instanceof UnAuthorized) {
-            this.phoneNumber.setErrors({ notFound: true });
-          } else {
-            console.log('error', error);
-          }
+        await this.authService.clearFieldDataFromStorage("client-auth");
+        await this.authService.setFieldDataToStorage(
+          "client-auth",
+          this.clientObj
+        );
+        this.router.navigateByUrl("/app-starter-auth/signin/password");
+      },
+      (error: AppError) => {
+        this.loading = false;
+        if (error instanceof BadInput) {
+          this.phoneNumber.setErrors({ required: true });
+        } else if (error instanceof NotFoundError) {
+          this.phoneNumber.setErrors({ notFound: true });
+        } else if (error instanceof UnAuthorized) {
+          this.phoneNumber.setErrors({ notFound: true });
+        } else {
+          console.log("error", error);
         }
-      );
+      }
+    );
   }
 }

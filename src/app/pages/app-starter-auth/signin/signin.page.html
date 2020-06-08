@@ -42,11 +42,22 @@
               [(ngModel)]="phone"
             ></ion-input>
           </ion-item>
-          <div class="alert alert-danger" *ngIf="formSubmit && !phoneNumber.valid">
-            <div *ngIf="phoneNumber.errors.required">This phone number is invalid</div>
-            <div *ngIf="(phoneNumber.errors.min || phoneNumber.errors.max)">This phone number is invalid</div>
-            <div *ngIf="phoneNumber.errors.pattern">Phone Number doesn't match the pattern.</div>
-            <div *ngIf="phoneNumber.errors.notFound">This phone number not exits</div>
+          <div
+            class="alert alert-danger"
+            *ngIf="formSubmit && !phoneNumber.valid"
+          >
+            <div *ngIf="phoneNumber.errors.required">
+              This phone number is invalid
+            </div>
+            <div *ngIf="(phoneNumber.errors.min || phoneNumber.errors.max)">
+              This phone number is invalid
+            </div>
+            <div *ngIf="phoneNumber.errors.pattern">
+              Phone Number doesn't match the pattern.
+            </div>
+            <div *ngIf="phoneNumber.errors.notFound">
+              This phone number not exits
+            </div>
           </div>
         </ion-col>
       </ion-row>
