@@ -1,0 +1,192 @@
+<ion-content>
+  <div class="content">
+    <div class="back-btn">
+      <ion-buttons slot="start">
+        <ion-icon
+          class="back"
+          size="large"
+          name="arrow-back-outline"
+          (click)="goBack()"
+        ></ion-icon>
+      </ion-buttons>
+    </div>
+
+    <div class="location-inputs">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="input-row">
+          <ion-col size="12">
+            <div class="input-container">
+              <ion-item lines="none" color="light">
+                <span class="from-circle"></span>
+                <span class="from-circle-back"></span>
+                <ion-input
+                  placeholder="From"
+                  type="text"
+                  [value]="[selectedSourceLocation?.address]"
+                  #fromInputEl
+                  autofocus="true"
+                  (ionInput)="onSearchSourceLocation($event.target.value)"
+                  (ionFocus)="onFocusFrom($event.target.value)"
+                  (ionBlur)="onBlurFrom()"
+                >
+                </ion-input>
+                <div
+                  class="edit-icon-container edit-icon icon-container"
+                  #editFromIcon
+                >
+                  <ion-icon
+                    name="pencil-outline"
+                    slot="end"
+                    class="edit-icon"
+                  ></ion-icon>
+                </div>
+                <div
+                  class="close-icon-container close-icon icon-container"
+                  #closeFromIcon
+                >
+                  <ion-icon
+                    name="close-outline"
+                    slot="end"
+                    size="large"
+                    (click)="closeSourceLocationField()"
+                  ></ion-icon>
+                </div>
+              </ion-item>
+            </div>
+          </ion-col>
+          <ion-col size="12">
+            <div class="input-container">
+              <ion-item lines="none" color="light">
+                <span class="where-circle"></span>
+                <span class="where-circle-back"></span>
+                <ion-input
+                  placeholder="Where to?"
+                  type="text"
+                  [value]="[selectedDestinationLocation?.address]"
+                  #whereInputEl
+                  (input)="onSearchDestinationLocation($event.target.value)"
+                  (ionFocus)="onFocusWhere($event.target.value)"
+                  (ionBlur)="onBlurwhere()"
+                >
+                </ion-input>
+                <div
+                  class="edit-icon-container edit-icon icon-container"
+                  #editWhereIcon
+                >
+                  <ion-icon
+                    name="pencil-outline"
+                    slot="end"
+                    class="edit-icon"
+                  ></ion-icon>
+                </div>
+                <div
+                  class="close-icon-container close-icon icon-container"
+                  #closeWhereIcon
+                >
+                  <ion-icon
+                    name="close-outline"
+                    slot="end"
+                    size="large"
+                    (click)="closeDestinationLocationField()"
+                  ></ion-icon>
+                </div>
+              </ion-item>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="locations-list" *ngIf="!mapAdjustment">
+      <ion-grid class="ion-no-padding">
+        <div *ngIf="mapAdjustmentIcons">
+          <ion-row class="current-location">
+            <ion-col>
+              <ion-item lines="none" (click)="setCurrentLocation()">
+                <ion-icon
+                  name="locate-sharp"
+                  size="large"
+                  slot="start"
+                ></ion-icon>
+                <ion-label>Current Location</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="map-adjust">
+            <ion-col>
+              <ion-item lines="none" (click)="openLocationMapContainer()">
+                <ion-icon name="pin-sharp" size="large" slot="start"></ion-icon>
+                <ion-label>Adjust on Map</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <ion-row class="progress" *ngIf="loading">
+          <ion-col class="spinner">
+            <ion-spinner color="primary" name="crescent"></ion-spinner>
+          </ion-col>
+        </ion-row>
+
+        <ion-row
+          *ngFor="let sLocation of sourceLocationItems"
+          (click)="onSelectionSourceLocation(sLocation)"
+        >
+          <ion-col size="12">
+            <ion-item lines="none">
+              <ion-icon
+                name="location-outline"
+                slot="start"
+                size="large"
+              ></ion-icon>
+              <div class="address">
+                <ion-label class="main-text">
+                  {{ sLocation?.structured_formatting.main_text }}
+                </ion-label>
+                <ion-label class="secondary-text">
+                  {{ sLocation?.structured_formatting.secondary_text }}
+                </ion-label>
+              </div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row
+          *ngFor="let dLocation of destinationLocationItems"
+          (click)="onSelectionDestinationLocation(dLocation)"
+        >
+          <ion-col size="12">
+            <ion-item lines="none">
+              <ion-icon
+                name="location-outline"
+                slot="start"
+                size="large"
+              ></ion-icon>
+              <div class="address">
+                <ion-label class="main-text">
+                  {{ dLocation?.structured_formatting.main_text }}
+                </ion-label>
+                <ion-label class="secondary-text">
+                  {{ dLocation?.structured_formatting.secondary_text }}
+                </ion-label>
+              </div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="map-container" *ngIf="mapAdjustment">
+      <app-location-picker-map
+        [center]="currentLocation"
+        [lastModifiedField]="lastFocusedField"
+        (confirmPcikupEmitted)="capturePickupConfirmation()"
+        (confirmDropoffEmitted)="captureDropoffConfirmation()"
+        (centerEmitted)="captureLocationFromMap($event)"
+      ></app-location-picker-map>
+    </div>
+  </div>
+
+  <form></form>
+</ion-content>

@@ -1,5 +1,71 @@
 <ion-content>
-  <div class="side-menu">
-    <ion-menu-button color="primary"></ion-menu-button>
+  <div class="container">
+    <div class="side-menu">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </div>
+    <div class="map-container">
+      <app-map-cover
+        class="map-cmp"
+        ></app-map-cover>
+    </div>
+
+    <ion-grid class="dashboard-links">
+      <ion-row class="header-map-link">
+        <ion-col class="ion-no-padding">
+          <div
+            role="button"
+            (click)="openLocationPickerModal()"
+          >
+            <p><span class="circle"></span>Where to?</p>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="btn-links">
+        <ion-col size="2" offset="2">
+          <ion-icon name="home-outline" size="large"></ion-icon>
+          <ion-label class="caption">Home</ion-label>
+        </ion-col>
+        <ion-col size="2" offset="1">
+          <ion-icon name="briefcase-outline" size="large"></ion-icon>
+          <ion-label class="caption">Work</ion-label>         
+        </ion-col>
+        <ion-col size="2" offset="1">
+          <ion-icon name="add-outline" size="large"></ion-icon>
+          <ion-label class="caption">Add</ion-label>          
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- <div class="dashboard-links">
+      <div class="header-map-link">
+        <p><span class="circle"></span>Where to?</p>
+      </div>
+      <div class="btn-links">
+        <div class="btn place-btn" style="float: right;">
+          <div class="btn-icon">
+            <ion-icon name="home-outline"></ion-icon>
+          </div>
+          <div class="btn-caption">
+            <p>Home</p>
+          </div>
+        </div>
+        <div class="btn place-btn">
+          <div class="btn-icon">
+            <ion-icon name="home-outline"></ion-icon>
+          </div>
+          <div class="btn-caption">
+            <p>Home</p>
+          </div>
+        </div>
+        <div class="btn place-btn">
+          <div class="btn-icon">
+            <ion-icon name="home-outline"></ion-icon>
+          </div>
+          <div class="btn-caption">
+            <p>Home</p>
+          </div>
+        </div>
+      </div>
+    </div> -->
   </div>
 </ion-content>
