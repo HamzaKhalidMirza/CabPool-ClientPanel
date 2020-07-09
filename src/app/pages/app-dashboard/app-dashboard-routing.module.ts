@@ -31,6 +31,10 @@ const routes: Routes = [
   {
     path: 'trip',
     loadChildren: () => import('./side-menu/trip/trip.module').then( m => m.TripPageModule)
+  },
+  {
+    path: 'trip-filtered-list',
+    loadChildren: () => import('./booking/trip-filtered-list/trip-filtered-list.module').then( m => m.TripFilteredListPageModule)
   }
 ];
 

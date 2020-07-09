@@ -1,0 +1,163 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Trip</ion-title>
+    <ion-buttons slot="start">
+      <ion-icon
+        class="back"
+        size="large"
+        name="arrow-back-outline"
+        (click)="goBack()"
+      ></ion-icon>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-icon
+        class="filter-icon"
+        size="large"
+        name="car-sport-outline"
+        (click)="changeCarFilter()"
+      ></ion-icon>
+      <ion-icon
+        class="filter-icon"
+        size="large"
+        name="filter-outline"
+      ></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="isLoading" style="position: fixed; top: 50%; left: 50%;">
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid
+    *ngIf="!isLoading && (!loadedTrips || loadedTrips.length <= 0)"
+    style="position: fixed; top: 40%; left: 35%;"
+  >
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+        <p>No Trips Found!</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid style="margin-top: 3px;">
+    <ion-row>
+      <ion-col
+        size="5"
+        style="border: 1px solid #bbb; border-right: none; background: #eee;"
+      >
+        <ion-item lines="none">
+          <ion-label
+            position="floating"
+            style="font-size: 1rem; font-weight: 500;"
+            >Time</ion-label
+          >
+          <ion-datetime
+            displayFormat="hh:mm:A"
+            style="height: 50px;"
+          ></ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col
+        size="7"
+        style="border: 1px solid #bbb; border-left: none; background: #eee;"
+      >
+        <ion-item lines="none">
+          <ion-label
+            position="floating"
+            style="font-size: 1rem; font-weight: 500;"
+            >Week Days</ion-label
+          >
+          <ion-select
+            okText="Okay"
+            cancelText="Dismiss"
+            style="height: 50px; padding-top: -10px;"
+            (ionChange)="filterTripsByDay($event.target.value)"
+          >
+            <ion-select-option *ngFor="let day of week"
+              >{{day.day}}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="!isLoading && relevantTrips.length > 0"
+    style="margin-bottom: 45px;">
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+        <ion-item
+          button
+          lines="none"
+          style="
+            margin-bottom: 10px;
+            border: 1px solid var(--ion-color-primary);
+          "
+          *ngFor="let trip of relevantTrips"
+        >
+          <div slot="end">
+            <ion-thumbnail style="border: 1px solid var(--ion-color-primary);">
+              <ion-img [src]="[trip?.driver.photoAvatar]"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h2>{{ trip?.driver.fName}}</h2>
+              <p>
+                {{ trip?.driver.ratingsAverage}}/{{trip?.driver.ratingsQuantity
+                }}
+              </p>
+            </ion-label>
+          </div>
+          <ion-label>
+            <h2>{{ trip?.startLocation.address }}</h2>
+            <p>{{ trip?.endLocation.address }}</p>
+            <p>
+              {{ getDayName(trip?.startDate, "en-US") }} at {{
+              getTime(trip?.startTime) }}
+            </p>
+            <p>Total Seats: {{ trip?.endLocation.totalSeats }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  <ion-grid
+    *ngIf="isCarFilter"
+    style="position: fixed; bottom: 0; left: 0; right: 0; 
+    background: var(--ion-color-primary); z-index: 1;"
+  >
+    <ion-row>
+      <ion-col size="3" style="border: 1px solid #ccc; background: #eee;
+      align-items: center; justify-content: center; display: flex;"
+      (click)="filterTripsByBike()"
+      >
+        <ion-icon name="bicycle-outline" size="large" color="primary"></ion-icon>
+      </ion-col>
+      <ion-col size="3" style="border: 1px solid #ccc; background: #eee;
+      align-items: center; justify-content: center; display: flex;"
+      (click)="filterTripsByMini()"
+      >
+        <ion-icon name="car-outline" size="large" color="primary"></ion-icon>
+      </ion-col>
+      <ion-col size="3" style="border: 1px solid #ccc; background: #eee;
+      align-items: center; justify-content: center; display: flex;"
+      (click)="filterTripsByMoto()"
+      >
+        <ion-icon name="car-sport-outline" size="large" color="primary"></ion-icon>
+      </ion-col>
+      <ion-col size="3" style="border: 1px solid #ccc; background: #eee;
+      align-items: center; justify-content: center; display: flex;"
+      (click)="filterTripsByVan()"
+      >
+        <ion-icon name="bus-outline" size="large" color="primary"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
