@@ -32,6 +32,7 @@ export class LocationPickerModalComponent implements OnInit, AfterViewInit {
   lastFocusedField: any;
 
   @Input("center") currentLocation: Coordinates;
+  actualCurrentAddress: any;
   googleMapsSdk: any;
   loading: any;
 
@@ -60,11 +61,45 @@ export class LocationPickerModalComponent implements OnInit, AfterViewInit {
     if (this.currentLocation) {
       this.baseMapService
         .getAddress(this.currentLocation.lat, this.currentLocation.lng)
-        .subscribe(() => {
+        .subscribe((address) => {
+          let actualAddress = '';
+          let streetAddress = {
+            street_number: null,
+            route: null,
+            locality: null,
+          };
+  
+          address.address_components.forEach((addressCmp) => {
+            let types = addressCmp.types;
+            types.forEach((type) => {
+              if (type === "street_number") {
+                streetAddress.street_number = addressCmp.long_name;
+              } else if (type === "route") {
+                streetAddress.route = addressCmp.long_name;
+              } else if (type === "locality") {
+                streetAddress.locality = addressCmp.long_name;
+              }
+            });
+          });
+          
+          if(streetAddress.street_number != null) {
+            actualAddress += streetAddress.street_number + ' - ' +
+                             streetAddress.locality;
+          } else if(streetAddress.route != null) {
+            actualAddress += streetAddress.route + ' - ' +
+                             streetAddress.locality;
+          } else if(streetAddress.locality != null) {
+            actualAddress += streetAddress.locality + ' - ' +
+                             streetAddress.locality;
+          }
+
+          this.actualCurrentAddress = actualAddress;
+  
           const location: PlaceLocation = {
             lat: this.currentLocation.lat,
             lng: this.currentLocation.lng,
-            address: "Your Location",
+            address: actualAddress,
+            caption: "Your Location",
             staticMapImageUrl: null,
           };
 
@@ -280,6 +315,7 @@ export class LocationPickerModalComponent implements OnInit, AfterViewInit {
           lat: position.lat,
           lng: position.lng,
           address: item.structured_formatting.main_text,
+          caption: item.structured_formatting.main_text,
           staticMapImageUrl: null,
         };
 
@@ -324,6 +360,7 @@ export class LocationPickerModalComponent implements OnInit, AfterViewInit {
           lat: position.lat,
           lng: position.lng,
           address: item.structured_formatting.main_text,
+          caption: item.structured_formatting.main_text,
           staticMapImageUrl: null,
         };
 
@@ -358,7 +395,8 @@ export class LocationPickerModalComponent implements OnInit, AfterViewInit {
       const location: PlaceLocation = {
         lat: this.currentLocation.lat,
         lng: this.currentLocation.lng,
-        address: "Your Location",
+        address: this.actualCurrentAddress,
+        caption: "Your Location",
         staticMapImageUrl: null,
       };
 
@@ -386,7 +424,8 @@ export class LocationPickerModalComponent implements OnInit, AfterViewInit {
       const location: PlaceLocation = {
         lat: this.currentLocation.lat,
         lng: this.currentLocation.lng,
-        address: "Your Location",
+        address: this.actualCurrentAddress,
+        caption: "Your Location",
         staticMapImageUrl: null,
       };
 

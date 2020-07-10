@@ -100,6 +100,7 @@
             border: 1px solid var(--ion-color-primary);
           "
           *ngFor="let trip of relevantTrips"
+          [routerLink]="['/app-dashboard/trip-filtered-list',trip?.id]"
         >
           <div slot="end">
             <ion-thumbnail style="border: 1px solid var(--ion-color-primary);">

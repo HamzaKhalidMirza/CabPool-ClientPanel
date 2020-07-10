@@ -134,6 +134,7 @@ export class LocationPickerMapComponent implements OnInit, AfterViewInit {
           lat: center.lat,
           lng: center.lng,
           address: actualAddress,
+          caption: actualAddress,
           staticMapImageUrl: null
         };
 

@@ -22,7 +22,7 @@
                 <ion-input
                   placeholder="From"
                   type="text"
-                  [value]="[selectedSourceLocation?.address]"
+                  [value]="[selectedSourceLocation?.caption]"
                   #fromInputEl
                   autofocus="true"
                   (ionInput)="onSearchSourceLocation($event.target.value)"
@@ -62,7 +62,7 @@
                 <ion-input
                   placeholder="Where to?"
                   type="text"
-                  [value]="[selectedDestinationLocation?.address]"
+                  [value]="[selectedDestinationLocation?.caption]"
                   #whereInputEl
                   (input)="onSearchDestinationLocation($event.target.value)"
                   (ionFocus)="onFocusWhere($event.target.value)"

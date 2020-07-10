@@ -6,7 +6,16 @@ import { TripFilteredListPage } from './trip-filtered-list.page';
 const routes: Routes = [
   {
     path: '',
-    component: TripFilteredListPage
+    children: [
+      {
+        path: '',
+        component: TripFilteredListPage,
+      },
+      {
+        path: ':tridId',
+        loadChildren: () => import('./filtered-trip-detail/filtered-trip-detail.module').then( m => m.FilteredTripDetailPageModule)
+      }
+    ]
   }
 ];
 

@@ -1,0 +1,193 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Trip Booking</ion-title>
+    <ion-buttons slot="start">
+      <ion-icon
+        class="back"
+        size="large"
+        name="arrow-back-outline"
+        (click)="goBack()"
+      ></ion-icon>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button
+      (click)="onBookingTrip()"
+      [disabled]="!tripBookingForm.valid"
+      >
+        <ion-icon name="checkmark" size="large" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="tripBookingForm">
+    <ion-grid class="ion-no-padding">
+      <ion-row class="map-img">
+        <ion-col size="12">
+          <div class="map-preview">
+            <div class="map" #mapTrip></div>
+            <div class="map-btn">
+              <ion-button color="primary" disabled>
+                <ion-icon name="locate" slot="start"></ion-icon>
+                <ion-label>Trip Map</ion-label>
+              </ion-button>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="isLoading" style="position: fixed; top: 50%; left: 50%;">
+      <ion-row>
+        <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+          <ion-spinner color="primary"></ion-spinner>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="ion-no-padding" *ngIf="!isLoading && loadedTrip != null">
+      <ion-row>
+        <ion-col size="12">
+          <ion-card
+            style="
+              border-radius: 20px;
+              border: 1px solid #aaa;
+              padding: 0 10px;
+            "
+          >
+            <ion-card-header>
+              <ion-card-title>{{tripSourceLocation?.address}}</ion-card-title>
+              <ion-card-subtitle
+                >{{tripDestLocation?.address}}</ion-card-subtitle
+              >
+            </ion-card-header>
+            <ion-card-content>
+              <p>
+                <strong>
+                  {{ getTripDayName(loadedTrip?.startDate, "en-US") }} at {{
+                  getTripTime(loadedTrip?.startTime) }}
+                </strong>
+              </p>
+              <p>
+                Trip Status:
+                <strong>{{ loadedTrip?.status | uppercase }}</strong>
+              </p>
+              <p>
+                Seats Available:
+                <strong>{{ loadedTrip?.seatsAvailable }}</strong>
+              </p>
+              <p
+                *ngIf="loadedTrip?.description"
+                style="
+                  margin-top: 10px;
+                  padding: 10px;
+                  border: 1px solid #bbb;
+                  border-radius: 10px;
+                "
+              >
+                Description: {{ loadedTrip?.description }}
+              </p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="12">
+          <ion-card
+            style="
+              border-radius: 10px;
+              border: 1px solid #aaa;
+              padding: 0 10px;
+            "
+          >
+            <ion-item lines="none" style="border-bottom: 1px solid #aaa;">
+              <ion-label>Contact Driver</ion-label>
+              <ion-icon
+                name="navigate-outline"
+                slot="end"
+                color="primary"
+              ></ion-icon>
+            </ion-item>
+            <ion-item
+              lines="none"
+              style="border-bottom: 1px solid #aaa;"
+              (click)="openMapPickerModal()"
+            >
+              <ion-label>Pickup & Dropoff</ion-label>
+              <ion-icon
+                name="navigate-outline"
+                slot="end"
+                color="primary"
+              ></ion-icon>
+            </ion-item>
+            <ion-item lines="none" style="border-bottom: 1px solid #aaa;">
+              <ion-label>Seats Reserved</ion-label>
+              <div class="counter">
+                <span class="plus btn btnP" (click)="incrementSeat()">+</span>
+                <span class="value">{{seatsCounter}}</span>
+                <span class="minus btn btnM" (click)="decrementSeat()">-</span>
+              </div>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Description</ion-label>
+              <ion-textarea
+                rows="3"
+                formControlName="description"
+                style="
+                  border-bottom: 1px solid #aaa;
+                  padding: 5px;
+                  margin-bottom: 10px;
+                  border-radius: 0 0 10px 10px;
+                "
+              ></ion-textarea>
+            </ion-item>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div #warningContainer style="display: none;">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="map-img">
+          <ion-col size="12">
+            <ion-card
+              style="
+                border-radius: 10px;
+                border: 1px solid #aaa;
+                padding: 0 10px;
+              "
+            >
+              <ion-item lines="none">
+                <p style="color: var(--ion-color-primary);">{{warningText}}</p>
+                <ion-icon
+                  name="warning-outline"
+                  slot="end"
+                  color="primary"
+                ></ion-icon>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div #mapContainer style="display: none;">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="map-img">
+          <ion-col size="12">
+            <ion-card style="border-radius: 10px; border: 1px solid #aaa;">
+              <div class="map-preview">
+                <div class="map" #mapBooking></div>
+                <div class="map-btn">
+                  <ion-button color="primary" disabled>
+                    <ion-icon name="locate" slot="start"></ion-icon>
+                    <ion-label>Booking Map</ion-label>
+                  </ion-button>
+                </div>
+              </div>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </form>
+</ion-content>

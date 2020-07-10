@@ -1,0 +1,76 @@
+.back {
+  margin-left: 10px;
+}
+
+.map-img {
+  margin-bottom: 10px;
+
+  .map-preview {
+    width: 100%;
+    max-width: 100%;
+    height: 20rem;
+    max-height: 40vh;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .map {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background-color: transparent;
+      opacity: 0;
+      transition: opacity 300ms ease-in;
+    }
+    .map.visible {
+      opacity: 1;
+    }
+    .map-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 30px;
+      margin-right: 5px;
+
+      ion-button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+
+.counter {
+  width: 30%;
+  max-width: 30%;
+  height: 2rem;
+  border: 1px solid var(--ion-color-primary);
+  border-radius: 10px;
+
+  span {
+    display: inline-block;
+    width: 30%;
+    height: 100%;
+    padding-left: 10%;
+    padding-top: 5%;
+  }
+  span.value {
+    width: 40%;
+    padding-left: 15%;
+  }
+  span.btn {
+    background-color: var(--ion-color-primary);
+    color: #fff;
+  }
+  span.btnP {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+  span.btnM {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
