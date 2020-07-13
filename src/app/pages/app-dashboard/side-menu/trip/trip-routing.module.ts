@@ -6,7 +6,17 @@ import { TripPage } from './trip.page';
 const routes: Routes = [
   {
     path: '',
-    component: TripPage
+    children: [
+      {
+        path: '',
+        component: TripPage,
+      },
+      {
+        path: ':tridId',
+        loadChildren: () => import('./trip-detail/trip-detail.module').then( m => m.TripDetailPageModule)
+      }
+    ]
+
   }
 ];
 

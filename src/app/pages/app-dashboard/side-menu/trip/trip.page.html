@@ -3,8 +3,61 @@
     <ion-buttons slot="start">
       <ion-icon class="back" size="large" name="arrow-back-outline" (click)="goBack()"></ion-icon>
     </ion-buttons>
-    <ion-title>Trips</ion-title>
+    <ion-title>History</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-segment value="complete" (ionChange)="onFilterUpdate($event)">
+    <ion-segment-button value="complete" checked>Completed</ion-segment-button>
+    <ion-segment-button value="cancelled">Cancelled</ion-segment-button>
+    <ion-segment-button value="upcoming">Upcoming</ion-segment-button>
+  </ion-segment>
+
+  <ion-grid *ngIf="isLoading" style="position: fixed; top: 50%; left: 50%;">
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid
+    *ngIf="!isLoading && (!relevantbookings || relevantbookings.length <= 0)"
+    style="position: fixed; top: 40%; left: 35%;"
+  >
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+        <p>No Trips Found!</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid
+    *ngIf="!isLoading && relevantbookings.length > 0"
+  >
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+        <ion-item 
+          button
+          lines="none"
+          style="margin-bottom: 10px; border: 1px solid #eee;" 
+          *ngFor="let booking of relevantbookings"
+          [routerLink]="['/app-dashboard/trip',booking?.trip?.id]"
+        >
+          <ion-icon name="car-outline" size="large" color="primary" slot="start"></ion-icon>
+          <ion-icon name="chevron-forward-sharp" color="primary" slot="end"></ion-icon>
+          <ion-label>
+            <h2>{{ booking?.startLocation.address }}</h2>
+            <p>{{ booking?.endLocation.address }}</p>
+            <p>
+              {{ getTripDayName(booking?.trip?.startDate, "en-US") }} at 
+              {{ getTripTime(booking?.trip?.startTime) }}
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

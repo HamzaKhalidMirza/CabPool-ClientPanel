@@ -63,6 +63,19 @@ export class TripService {
     );
   }
 
+  public async getCurrentClientBookings() {
+    const token = await this.authService.getTokenFromStorage();
+    const url = ClientAppConfig.getHostPath() + `/api/v1/bookings/getCurrentClientBookings`;
+
+    return this.http.get(url, {
+        headers: new HttpHeaders().set("Authorization", "Bearer " + token),
+      })
+    .pipe(
+      map((response: Response) => response),
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: Response) {
     if (error.status === 400) {
       return throwError(new BadInput(error));
